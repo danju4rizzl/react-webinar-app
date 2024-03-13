@@ -1,30 +1,36 @@
-import { database } from '@/lib/firebase'
-import './App.css'
-import SignUpForm from './components/signup-form'
-const imgSrc =
-  'https://images.pexels.com/photos/158826/structure-light-led-movement-158826.jpeg'
-// console.log(database)
+import { ThemeProvider } from "@/components/theme-provider";
+import { database } from "@/lib/firebase";
+import "./App.css";
+import LoginForm from "./components/login-form";
+import { ModeToggler } from "./components/mode-toggler";
 
 function App() {
   return (
     <main>
-      <div className="max-w-full min-h-full h-screen   grid grid-flow-col ">
-        <div className="bg-slate-200 p-16">
-          <SignUpForm />
+      <div className="dark:bg-neutral-900 max-w-full min-h-full h-screen grid grid-flow-col">
+        <div className=" dark:text-neutral-100 p-24 space-y-8 grid justify-center content-center">
+          <div className="space-y-4">
+            <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">
+              Let's get <span className="text-">creative!</span>
+            </h1>
+            <p className="scroll-m-20 text-md">Log in to Drawh.ai to start creating magic.</p>
+          </div>
+
+          <LoginForm />
+          <ModeToggler />
         </div>
+
         <div
-          className=""
+          className="p-24 "
           style={{
-            backgroundImage: 'url(/bg-image.jpeg)'
+            backgroundImage: "url(/login-screen-bg-image.png)",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
           }}
-        >
-          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-            Sign up here
-          </h1>
-        </div>
+        ></div>
       </div>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
