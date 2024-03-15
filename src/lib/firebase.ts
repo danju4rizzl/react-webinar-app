@@ -1,7 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { getDatabase } from 'firebase/database'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from 'firebase/auth'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -18,16 +23,13 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig)
+const firebaseApp = initializeApp(firebaseConfig)
 
-export const database = getDatabase(app)
+export const database = getDatabase(firebaseApp)
 
-export const auth = getAuth(app)
+export const auth = getAuth(firebaseApp)
 
-export const signupNewUser = async (
-  userEmail: string,
-  userPassword: string
-) => {
+export const signUp = async (userEmail: string, userPassword: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -38,7 +40,36 @@ export const signupNewUser = async (
     const user = userCredential.user
     return user
   } catch (error) {
-    return null
+    return { errors: `🔴 ${error} ` }
+  }
+}
+
+export const login = async (userEmail: string, userPassword: string) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      userEmail,
+      userPassword
+    )
+
+    const user = userCredential.user
+    return user
+  } catch (error) {
+    return { errors: `🔴 ${error} ` }
+  }
+}
+
+export const isLoggedIn = async () => {
+  try {
+    const data = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        return user
+      } else {
+        return null
+      }
+    })
+  } catch (error) {
+    return { errors: `🔴 ${error} ` }
   }
 }
 

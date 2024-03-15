@@ -1,5 +1,7 @@
 'use client'
 
+import { login, signUp } from '@/lib/firebase'
+
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -40,10 +42,12 @@ export default function LoginForm() {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+
+    const user = await login(values.username, values.password)
+    console.log(user)
   }
 
   return (

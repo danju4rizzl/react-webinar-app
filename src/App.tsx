@@ -1,8 +1,7 @@
 import { ThemeProvider } from '@/components/theme-provider'
-import { database } from '@/lib/firebase'
+import { database, isLoggedIn } from '@/lib/firebase'
 import './App.css'
 import LoginForm from './components/login-form'
-
 import useIsMobile from './hooks/useIsMobile'
 
 function App() {
