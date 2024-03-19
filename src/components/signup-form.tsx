@@ -1,6 +1,6 @@
 'use client'
 
-import { login, signUp } from '@/lib/firebase'
+import { signUp } from '@/lib/firebase'
 
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -22,22 +22,27 @@ import AppleIcon from '@/assets/apple.svg'
 
 const formSchema = z.object({
   username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.'
+    message: 'Username  must be at least 2 characters.'
   }),
-  password: z.string().min(2, {
+  email: z.string().min(2, {
     message: 'Password must be at least 2 characters.'
   }),
-  remember: z.boolean().default(false).optional()
+  accepted: z
+    .boolean()
+    .default(false)
+    .refine((value) => value !== true, {
+      message: 'You must accept the Terms and Conditions.'
+    })
 })
 
-export default function LoginForm() {
+export default function SignupForm() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
-      password: '',
-      remember: false
+      email: '',
+      accepted: false
     }
   })
 
@@ -46,7 +51,7 @@ export default function LoginForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    const user = await login(values.username, values.password)
+    const user = await signUp(values.username, values.email)
     console.log(user)
   }
 
@@ -61,9 +66,10 @@ export default function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your username"
+                  placeholder="Enter your new  username"
                   {...field}
                   className="focus:outline-teal-300 border-teal-100 rounded"
                 />
@@ -73,15 +79,16 @@ export default function LoginForm() {
         />
         <FormField
           control={form.control}
-          name="password"
+          name="email"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Email address</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your  password"
+                  placeholder="Enter your email address"
                   {...field}
                   className="focus:outline-teal-300 border-teal-100 rounded"
-                  type="password"
+                  type="email"
                 />
               </FormControl>
             </FormItem>
@@ -91,7 +98,7 @@ export default function LoginForm() {
         <div className="flex items-center justify-between">
           <FormField
             control={form.control}
-            name="remember"
+            name="accepted"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -101,23 +108,18 @@ export default function LoginForm() {
                       onChange={field.onChange}
                       className="rounded"
                     />
-                    <FormLabel>Remember me</FormLabel>
+                    <FormLabel>I agree with Terms and Conditions</FormLabel>
                   </div>
                 </FormControl>
               </FormItem>
             )}
           />
-          <FormItem>
-            <FormControl>
-              <a href="/">Forgot Password?</a>
-            </FormControl>
-          </FormItem>
         </div>
         <Button
           type="submit"
           className="w-full bg-green-300 rounded text-neutral-900 hover:text-neutral-100 hover:bg-green-900 transition-all"
         >
-          Log in
+          Sign Up
         </Button>
 
         <div className="flex justify-center items-center">
