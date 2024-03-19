@@ -1,6 +1,7 @@
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import useIsMobile from '@/hooks/useIsMobile'
 import SignupForm from '@/components/signup-form'
+import FancyText from '@/components/ui/fancy-text'
 
 export const Route = createLazyFileRoute('/signup')({
   component: SignUpComponent
@@ -23,7 +24,7 @@ function SignUpComponent() {
         <div className="grid space-y-8 md:justify-center">
           <div className="space-y-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">
-              Start using <span className="text-teal-300">drawh.ai</span> today!
+              Start using <FancyText title="drwah.ai" /> today!
             </h1>
             <p className="scroll-m-20 text-md">
               Signup to start creating magic.

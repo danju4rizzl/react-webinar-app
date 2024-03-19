@@ -1,4 +1,5 @@
 import LoginForm from '@/components/login-form'
+import FancyText from '@/components/ui/fancy-text'
 import useIsMobile from '@/hooks/useIsMobile'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 
@@ -29,10 +30,10 @@ function LoginComponent() {
         <div className="grid space-y-8 md:justify-center">
           <div className="space-y-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">
-              Continue using <span className="text">Drawh!</span>
+              Continue using <FancyText title="drwah.ai" /> now!
             </h1>
             <p className="scroll-m-20 text-md">
-              Log in to start creating magic.
+              Log back in to keep creating magic.
             </p>
           </div>
 
