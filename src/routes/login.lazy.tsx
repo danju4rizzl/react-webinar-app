@@ -26,7 +26,7 @@ function LoginComponent() {
       ></div>
 
       {/* right side  */}
-      <div className="dark:text-neutral-100 grid content-center p-20 md:p-14 backdrop-blur-2xl ">
+      <div className="dark:text-neutral-100 grid  content-between  p-20 md:py-48 md:px-36 backdrop-blur-2xl ">
         <div className="grid space-y-8 md:justify-center">
           <div className="space-y-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">
@@ -40,7 +40,7 @@ function LoginComponent() {
           <LoginForm />
         </div>
 
-        <div className="flex space-x-3">
+        <div className="flex space-x-1">
           <p>Don’t have an account?</p>
           <Link to="/signup" className="text-teal-300">
             SignUp
