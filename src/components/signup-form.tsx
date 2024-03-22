@@ -69,7 +69,7 @@ export default function SignupForm() {
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your new  username"
+                  placeholder="Create a username"
                   {...field}
                   className="focus:outline-teal-300 border-teal-100 rounded"
                 />

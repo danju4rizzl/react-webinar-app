@@ -20,7 +20,7 @@ function SignUpComponent() {
       style={isMobile ? styles : {}}
     >
       {/* right side  */}
-      <div className="dark:text-neutral-100 grid content-center p-20 md:p-14 backdrop-blur-2xl ">
+      <div className="dark:text-neutral-100 grid  content-between  p-20 md:py-40 md:px-48 backdrop-blur-2xl  ">
         <div className="grid space-y-8 md:justify-center">
           <div className="space-y-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">
@@ -34,7 +34,7 @@ function SignUpComponent() {
           <SignupForm />
         </div>
 
-        <div className="flex space-x-3">
+        <div className="flex space-x-1">
           <p>I have an account?</p>
           <Link to="/login" className="text-teal-300">
             Login
@@ -42,7 +42,7 @@ function SignUpComponent() {
         </div>
       </div>
 
-      {/* left side  */}
+      {/* right side  */}
       <div
         className="p-24 rounded-l-3xl hidden md:block animate-move-bg max-w-full h-screen overflow-hidden bg-cover shadow-inner"
         style={styles}
