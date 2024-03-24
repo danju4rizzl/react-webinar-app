@@ -1,3 +1,5 @@
+import { HeroSlider } from '@/components/slider'
+import FancyText from '@/components/ui/fancy-text'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
@@ -6,9 +8,10 @@ export const Route = createFileRoute('/')({
 
 function HomeComponent() {
   return (
-    <div className="">
+    <div className="h-screen">
       <div className="p-32">
-        <h1 className="text-white">Welcome to draw</h1>
+        <FancyText title="Welcome to draw" className="text-8xl" />
+        <HeroSlider />
       </div>
     </div>
   )

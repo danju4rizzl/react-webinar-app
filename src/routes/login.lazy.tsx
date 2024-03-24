@@ -26,7 +26,7 @@ function LoginComponent() {
       ></div>
 
       {/* right side  */}
-      <div className="dark:text-neutral-100 grid  content-between  p-20 md:py-48 md:px-36 backdrop-blur-2xl ">
+      <div className="dark:text-neutral-100 grid content-between px-20 py-52 md:py-48 md:px-36 backdrop-blur-2xl">
         <div className="grid space-y-8 md:justify-center">
           <div className="space-y-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">

@@ -1,11 +1,10 @@
 'use client'
 
-import { login, signUp } from '@/lib/firebase'
+import { login } from '@/lib/firebase'
 
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-
+import { LoginSchema, LoginFormType } from '@/lib/types'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -20,20 +19,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import GoogleIcon from '@/assets/google.svg'
 import AppleIcon from '@/assets/apple.svg'
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.'
-  }),
-  password: z.string().min(2, {
-    message: 'Password must be at least 2 characters.'
-  }),
-  remember: z.boolean().default(false).optional()
-})
-
 export default function LoginForm() {
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginFormType>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       username: '',
       password: '',
@@ -42,7 +31,7 @@ export default function LoginForm() {
   })
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: LoginFormType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
