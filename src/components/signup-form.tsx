@@ -3,8 +3,8 @@
 import { signUp } from '@/lib/firebase'
 
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { SignupSchema, SignupFormType } from '@/lib/types'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -20,25 +20,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import GoogleIcon from '@/assets/google.svg'
 import AppleIcon from '@/assets/apple.svg'
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username  must be at least 2 characters.'
-  }),
-  email: z.string().min(2, {
-    message: 'Password must be at least 2 characters.'
-  }),
-  accepted: z
-    .boolean()
-    .default(false)
-    .refine((value) => value !== true, {
-      message: 'You must accept the Terms and Conditions.'
-    })
-})
-
 export default function SignupForm() {
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignupFormType>({
+    resolver: zodResolver(SignupSchema),
     defaultValues: {
       username: '',
       email: '',
@@ -47,7 +32,7 @@ export default function SignupForm() {
   })
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: SignupFormType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
