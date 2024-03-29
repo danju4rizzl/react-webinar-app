@@ -1,8 +1,9 @@
 import FancyText from '@/components/ui/fancy-text'
 import { createFileRoute } from '@tanstack/react-router'
-import { HeroSlider } from '@/components/hero-slider'
-import { Button } from '@/components/ui/button'
+import { ImageSlider } from '@/components/image-slider'
 import FancyButton from '@/components/ui/fancy-button'
+
+import { SLIDER_DATA } from '@/lib/constance'
 
 export const Route = createFileRoute('/')({
   component: HomeComponent
@@ -35,7 +36,7 @@ function HomeComponent() {
         </div>
       </div>
       <div className="flex justify-center my-14">
-        <HeroSlider />
+        <ImageSlider sliderData={SLIDER_DATA} />
       </div>
     </div>
   )
