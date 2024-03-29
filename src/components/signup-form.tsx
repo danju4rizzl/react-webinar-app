@@ -19,6 +19,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 
 import GoogleIcon from '@/assets/google.svg'
 import AppleIcon from '@/assets/apple.svg'
+import FancyButton from './ui/fancy-button'
 
 export default function SignupForm() {
   // 1. Define your form.
@@ -100,12 +101,8 @@ export default function SignupForm() {
             )}
           />
         </div>
-        <Button
-          type="submit"
-          className="w-full bg-green-300 rounded text-neutral-900 hover:text-neutral-100 hover:bg-green-900 transition-all"
-        >
-          Sign Up
-        </Button>
+
+        <FancyButton title="Sign Up" className="w-full" isSubmit />
 
         <div className="flex justify-center items-center">
           <hr className="flex-1 border-neutral-600" />
