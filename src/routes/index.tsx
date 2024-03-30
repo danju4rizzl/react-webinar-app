@@ -1,17 +1,21 @@
 import FancyText from '@/components/ui/fancy-text'
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { ImageSlider } from '@/components/image-slider'
 import FancyButton from '@/components/ui/fancy-button'
 
 import { SLIDER_DATA } from '@/lib/constance'
+import Faq from '@/components/faq'
 
 export const Route = createFileRoute('/')({
   component: HomeComponent
 })
 
 function HomeComponent() {
+  const sliders = SLIDER_DATA
+
   return (
     <div className="">
+      {/* hero section */}
       <div
         className="p-32 grid justify-center bg-cover bg-no-repeat "
         style={{
@@ -30,13 +34,29 @@ function HomeComponent() {
           </p>
 
           <div className="">
-            <FancyButton title="Start using  my imagining" />
-            <p className="my-1">No credit card needed</p>
+            <Link to="/signup">
+              <FancyButton title="Start using Drawh AI now" />
+            </Link>
+            <p className="my-1 text-sm">No credit card needed</p>
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-14">
-        <ImageSlider sliderData={SLIDER_DATA} />
+      <div className="-my-44 pb-44">
+        {/* slider section */}
+        <div className="grid gap-y-14 justify-center">
+          <h2 className="text-4xl font-bold text-center dark:text-neutral-100">
+            Created by <FancyText title="Drawh Ai" />
+          </h2>
+          <ImageSlider sliderData={sliders} />
+        </div>
+
+        {/* faq section  */}
+        <div className="dark:text-neutral-100  mt-24 mb-5 grid justify-center gap-y-8  mx-auto">
+          <h4 className="text-4xl font-bold text-center capitalize">
+            Frequently asked questions
+          </h4>
+          <Faq />
+        </div>
       </div>
     </div>
   )

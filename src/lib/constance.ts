@@ -59,3 +59,41 @@ export const SLIDER_DATA = [
     src: 'https://res.cloudinary.com/deejaydev/image/upload/f_auto,q_auto/v1/ai-images/Default_Crouching_ninja_in_a_dynamic_pose_low_angle_exaggerate_1_khlm6y'
   }
 ]
+
+export const FAQ_DATA = [
+  {
+    question: 'What is Drawh Ai?',
+    answer:
+      'Drawh Ai is an AI-powered tool that enables users to create stunning images, illustrations, and eye-catching logos with just a click of a button.'
+  },
+  {
+    question: 'How does Drawh Ai work?',
+    answer:
+      'Drawh Ai utilizes powerful LLM models to generate high-quality visual content based on user input and preferences.'
+  },
+  {
+    question: 'What can I create with Drawh Ai?',
+    answer:
+      'You can create a variety of visual content including illustrations, logos, and possibly other design elements using Drawh Ai.'
+  },
+  {
+    question: 'Do I need design skills to use Drawh Ai?',
+    answer:
+      'No, Drawh Ai is designed to be user-friendly and intuitive, allowing users of all skill levels to create professional-looking visuals easily.'
+  },
+  {
+    question: 'Can I customize the generated images and logos?',
+    answer:
+      'Yes, Drawh Ai may offer customization options such as color selection, style variations, and layout adjustments to tailor the output to your preferences.'
+  },
+  {
+    question: 'Are there any limitations to the image size or resolution?',
+    answer:
+      "Drawh Ai may have specific guidelines on the maximum image size or resolution supported for optimal results. Please refer to the tool's documentation for more details."
+  },
+  {
+    question: 'How can I get support or help with using Drawh Ai?',
+    answer:
+      'For any technical assistance or queries related to using Drawh Ai, you can reach out to the support team through the provided contact channels.'
+  }
+]
