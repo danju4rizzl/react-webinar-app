@@ -19,7 +19,7 @@ function HomeComponent() {
       <div
         className="p-32 grid justify-center bg-cover bg-no-repeat "
         style={{
-          backgroundImage: `linear-gradient(to top, rgba(23, 23, 23, 1), rgba(23, 23, 23, 0.5)), url('/public/bg-image.jpeg')`
+          backgroundImage: `linear-gradient(to top, rgba(23, 23, 23, 1), rgba(23, 23, 23, 0.2),rgba(23, 23, 23, 1)), url('/bg-image.jpeg')`
         }}
       >
         <div className="text-white text-center gap-5 my-48 flex flex-col justify-center items-center ">
