@@ -1,5 +1,3 @@
-'use client'
-
 import { signUp } from '@/lib/firebase'
 
 import { useForm } from 'react-hook-form'
@@ -52,10 +50,10 @@ export default function SignupForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Create a new username</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Create a username"
+                  placeholder="Enter a username here"
                   {...field}
                   className="focus:outline-teal-300 border-teal-100 rounded"
                 />

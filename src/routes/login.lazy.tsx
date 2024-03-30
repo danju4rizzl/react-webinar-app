@@ -30,7 +30,7 @@ function LoginComponent() {
         <div className="grid space-y-8 md:justify-center">
           <div className="space-y-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">
-              Continue using <FancyText title="drwah.ai" /> now!
+              Continue using <FancyText title="Drawh Ai" /> now!
             </h1>
             <p className="scroll-m-20 text-md">
               Log back in to keep creating magic.

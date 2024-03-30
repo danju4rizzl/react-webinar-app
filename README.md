@@ -1,69 +1,30 @@
-# react webinar app
+# Drawh AI
 
 This document provides an overview of the important dependencies used in this project, including their purpose, installation, usage, and any important notes or considerations.
 
-## Dependency 1
+## Setting up the project 💠
 
-### Purpose
+- Install the necessary dependencies with the following command ⛓️
+  ```bash
+  pnpm install
+  ```
+- Start the development server with this: ⚙️
+  ```bash
+  pnpm run dev
+  ```
 
-- Briefly describe the purpose of this dependency.
+## Dependencies 📦
 
-### Installation
+#### [Zod]('https://zod.dev/') is a TypeScript-first schema declaration and validation library.
 
-- How to install this dependency.
+#### [ TanStack Router]('https://tanstack.com/router/v1/docs/framework/react/overview') TanStack Router is a router for building React applications.
 
-### Usage
+#### [ React Hook Form]('https://react-icons.github.io/react-icons/') for Less code, more easy performant forms
 
-- Provide examples of how this dependency is used in the project.
+#### [Shadcn/ui](https://ui.shadcn.com/docs) a set of beautifully designed components that you can copy and paste into your apps. with accessible. and easy to customize. 🔥Open Source.
 
-### Notes
+#### [TailwindCSS](https://tailwindcss.com/docs/installation) is a utility-first CSS framework packed with classes.
 
-- Any important notes or considerations about this dependency.
+#### [Vite](https://v4.vitejs.dev/guide/) is a build tool that provides, Lightning Fast HMR,Instant Server Start, Optimized Build and more
 
-## Dependency 2
-
-### Purpose
-
-- Briefly describe the purpose of this dependency.
-
-### Installation
-
-- How to install this dependency.
-
-### Usage
-
-- Provide examples of how this dependency is used in the project.
-
-### Notes
-
-- Any important notes or considerations about this dependency.
-
-## Dependency 3
-
-### Purpose
-
-- Briefly describe the purpose of this dependency.
-
-### Installation
-
-- How to install this dependency.
-
-### Usage
-
-- Provide examples of how this dependency is used in the project.
-
-### Notes
-
-- Any important notes or considerations about this dependency.
-
-## Additional Dependencies
-
-- Continue documenting each additional dependency following the same structure.
-
-## Conclusion
-
-- Summarize the importance of these dependencies in the project.
-
-## References
-
-- Link to any external documentation or resources related to these dependencies.
+#### [ React Icons]('https://react-icons.github.io/react-icons/') for popular icons in React projects.

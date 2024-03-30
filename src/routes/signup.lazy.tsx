@@ -24,7 +24,7 @@ function SignUpComponent() {
         <div className="grid space-y-8 md:justify-center">
           <div className="space-y-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight ">
-              Start using <FancyText title="drwah.ai" /> today!
+              Start using <FancyText title="Drawh Ai" /> today!
             </h1>
             <p className="scroll-m-20 text-md">
               Signup to start creating magic.
