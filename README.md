@@ -15,16 +15,18 @@ This document provides an overview of the important dependencies used in this pr
 
 ## Dependencies 📦
 
-#### [Zod]('https://zod.dev/') is a TypeScript-first schema declaration and validation library.
+#### [React]('https://react.dev/') helps create user interfaces from components.
+
+#### [Shadcn/ui](https://ui.shadcn.com/docs) a set of beautifully designed components that you can copy and paste into your apps. with accessible. and easy to customize. 🔥Open Source.
 
 #### [ TanStack Router]('https://tanstack.com/router/v1/docs/framework/react/overview') TanStack Router is a router for building React applications.
 
 #### [ React Hook Form]('https://react-icons.github.io/react-icons/') for Less code, more easy performant forms
 
-#### [Shadcn/ui](https://ui.shadcn.com/docs) a set of beautifully designed components that you can copy and paste into your apps. with accessible. and easy to customize. 🔥Open Source.
+#### [Zod]('https://zod.dev/') is a TypeScript-first schema declaration and validation library.
 
 #### [TailwindCSS](https://tailwindcss.com/docs/installation) is a utility-first CSS framework packed with classes.
 
 #### [Vite](https://v4.vitejs.dev/guide/) is a build tool that provides, Lightning Fast HMR,Instant Server Start, Optimized Build and more
 
-#### [ React Icons]('https://react-icons.github.io/react-icons/') for popular icons in React projects.
+#### [React Icons]('https://react-icons.github.io/react-icons/') for popular icons in React projects.

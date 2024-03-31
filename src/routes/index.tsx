@@ -14,7 +14,7 @@ function HomeComponent() {
   const sliders = SLIDER_DATA
 
   return (
-    <div className="">
+    <>
       {/* hero section */}
       <div
         className="p-32 grid justify-center bg-cover bg-no-repeat "
@@ -58,6 +58,6 @@ function HomeComponent() {
           <Faq />
         </div>
       </div>
-    </div>
+    </>
   )
 }
