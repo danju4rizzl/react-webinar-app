@@ -4,40 +4,50 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SignupSchema, SignupFormType } from '@/lib/types'
 
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel
+  FormLabel,
+  FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
-
-import GoogleIcon from '@/assets/google.svg'
-import AppleIcon from '@/assets/apple.svg'
 import FancyButton from './ui/fancy-button'
+import { useState } from 'react'
+
+import { useToast } from './ui/use-toast'
 
 export default function SignupForm() {
+  const [acceptTerms, setAcceptTerms] = useState(false)
+  const { toast } = useToast()
+
   // 1. Define your form.
   const form = useForm<SignupFormType>({
-    resolver: zodResolver(SignupSchema),
-    defaultValues: {
-      username: '',
-      email: '',
-      accepted: false
-    }
+    resolver: zodResolver(SignupSchema)
   })
 
   // 2. Define a submit handler.
-  async function onSubmit(values: SignupFormType) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit({ userEmail, userPassword }: SignupFormType) {
+    const { reset } = form
+    const data = await signUp(userEmail, userPassword)
 
-    const user = await signUp(values.username, values.email)
-    console.log(user)
+    toast({
+      title: 'Signup Success',
+      description: 'You have successfully signed up'
+    })
+    reset()
+    console.log(data)
   }
+
+  const { watch, formState } = form
+  const { userEmail, userPassword } = watch()
+  const isSubmitDisabled =
+    !userPassword ||
+    userPassword.length < 6 ||
+    !userEmail ||
+    formState.isSubmitting
 
   return (
     <Form {...form}>
@@ -47,85 +57,62 @@ export default function SignupForm() {
       >
         <FormField
           control={form.control}
-          name="username"
+          name="userEmail"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Create a new username</FormLabel>
+              <FormLabel>Email Address</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter a username here"
-                  {...field}
+                  placeholder="Enter a your email address"
                   className="focus:outline-teal-300 border-teal-100 rounded"
+                  type="email"
+                  {...field}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="email"
+          name="userPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>New Password</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your email address"
+                  placeholder="Enter a new password"
                   {...field}
                   className="focus:outline-teal-300 border-teal-100 rounded"
-                  type="email"
+                  type="password"
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
 
         <div className="flex items-center justify-between">
-          <FormField
-            control={form.control}
-            name="accepted"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="space-x-3 items-center flex">
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      className="rounded"
-                    />
-                    <FormLabel>I agree with Terms and Conditions</FormLabel>
-                  </div>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <FancyButton title="Sign Up" className="w-full" isSubmit />
-
-        <div className="flex justify-center items-center">
-          <hr className="flex-1 border-neutral-600" />
-          <small className="text-neutral-500 mx-2">or continue with</small>
-          <hr className="flex-1 border-neutral-600" />
-        </div>
-
-        <div className="flex justify-center items-center space-x-4">
-          <Button>
-            <img
-              src={GoogleIcon}
-              alt="Log in with Google"
-              className="w-6 h-6 mr-2"
+          <div className="space-x-3 items-center flex">
+            <Checkbox
+              checked={acceptTerms}
+              onClick={() => setAcceptTerms((prev) => !prev)}
+              className="rounded"
+              id="acceptedCheckbox"
+              disabled={isSubmitDisabled}
             />
-            Google Account
-          </Button>
-          <Button variant={'secondary'}>
-            <img
-              src={AppleIcon}
-              alt="Log in with Apple"
-              className="w-6 h-6  mr-2"
-            />
-            Apple Account
-          </Button>
+            <FormLabel htmlFor="acceptedCheckbox">
+              I agree with Terms and Conditions
+            </FormLabel>
+          </div>
         </div>
+
+        <FancyButton
+          title="Sign Up"
+          className="w-full"
+          isSubmit
+          isDisable={!acceptTerms || isSubmitDisabled}
+        />
       </form>
     </Form>
   )

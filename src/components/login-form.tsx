@@ -19,6 +19,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import GoogleIcon from '@/assets/google.svg'
 import AppleIcon from '@/assets/apple.svg'
 import FancyButton from './ui/fancy-button'
+import { Link } from '@tanstack/react-router'
 
 export default function LoginForm() {
   // 1. Define your form.
@@ -129,6 +130,13 @@ export default function LoginForm() {
             />
             Apple Account
           </Button>
+        </div>
+
+        <div className="flex justify-center space-x-1">
+          <p>Don’t have an account?</p>
+          <Link to="/signup" className="text-teal-300">
+            SignUp
+          </Link>
         </div>
       </form>
     </Form>

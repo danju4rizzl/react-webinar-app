@@ -1,22 +1,46 @@
-import FancyButton from '@/components/ui/fancy-button'
-import { Input } from '@/components/ui/input'
-import { createFileRoute } from '@tanstack/react-router'
+import * as React from 'react'
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
+
+import { useAuth } from '@/lib/auth'
 
 export const Route = createFileRoute('/app')({
-  component: AppComponent
+  // beforeLoad: ({ context, location }) => {
+  //   if (!context.auth.isAuthenticated) {
+  //     throw redirect({
+  //       to: '/login',
+  //       search: {
+  //         redirect: location.href
+  //       }
+  //     })
+  //   }
+  // },
+  component: DashboardComponent
 })
 
-function AppComponent() {
+function DashboardComponent() {
+  const navigate = useNavigate({ from: '/dashboard' })
+  const auth = useAuth()
+
+  const handleLogout = () => {
+    auth.setUser(null)
+    navigate({ to: '/' })
+  }
+
+  console.log(auth.user)
+
   return (
-    <div className="text-white p-32 flex flex-col items-center gap-14 ">
-      <h1 className="text-5xl">Happy late night, DeejayDev</h1>
-      {/* Prompt input */}
-      <div className=" flex w-1/2 justify-center py-3 pl-2 pr-5  dark:bg-neutral-800 border border-neutral-400 rounded-xl ">
-        <Input
-          placeholder="What would you like to drawh?"
-          className="border-0 text-lg placeholder:text-neutral-400 max-h-60"
-        />
-        <FancyButton title="Generate" className="w-1/4 font-bold" />
+    <div className=" text-white p-28">
+      <h3>Dashboard page</h3>
+      <p>Hi {auth.user}!</p>
+      <p>If you can see this, that means you are authenticated.</p>
+      <div className="mt-4">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="bg-slate-500 text-white py-2 px-4 rounded-md"
+        >
+          Logout
+        </button>
       </div>
     </div>
   )

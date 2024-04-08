@@ -9,18 +9,33 @@ import { SLIDER_DATA } from './constance'
  * acceptance of terms and conditions.
  */
 export const SignupSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.'
-  }),
-  email: z.string().min(2, {
-    message: 'Email must be at least 2 characters.'
-  }),
-  accepted: z
-    .boolean()
-    .default(false)
-    .refine((value) => value !== true, {
-      message: 'You must accept the Terms and Conditions.'
+  userEmail: z
+    .string()
+    .min(2, {
+      message: 'Email must be at least 2 characters.'
     })
+    .email({ message: 'Email address is not valid' })
+    .default(''),
+  userPassword: z
+    .string()
+    .min(8, 'Password must be at least 8 characters long')
+    .refine(
+      (value) => value.match(/[a-z]/),
+      'Password must contain at least one lowercase letter'
+    )
+    .refine(
+      (value) => value.match(/[A-Z]/),
+      'Password must contain at least one uppercase letter'
+    )
+    .refine(
+      (value) => value.match(/\d/),
+      'Password must contain at least one number'
+    )
+    .refine(
+      (value) => value.match(/[!@#$%^&*(),.?":{}|<>]/),
+      'Password must contain at least one special character'
+    )
+    .default('')
 })
 
 /**

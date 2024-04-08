@@ -39,13 +39,6 @@ function LoginComponent() {
 
           <LoginForm />
         </div>
-
-        <div className="flex space-x-1">
-          <p>Don’t have an account?</p>
-          <Link to="/signup" className="text-teal-300">
-            SignUp
-          </Link>
-        </div>
       </div>
     </div>
   )

@@ -5,11 +5,11 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  User,
+  GoogleAuthProvider,
+  signInWithPopup
 } from 'firebase/auth'
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -29,19 +29,17 @@ export const database = getDatabase(firebaseApp)
 
 export const auth = getAuth(firebaseApp)
 
-export const signUp = async (userEmail: string, userPassword: string) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      userEmail,
-      userPassword
-    )
+export const signUp = async (
+  userEmail: string,
+  userPassword: string
+): Promise<User> => {
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    userEmail,
+    userPassword
+  )
 
-    const user = userCredential.user
-    return user
-  } catch (error) {
-    return { errors: `🔴 ${error} ` }
-  }
+  return userCredential.user
 }
 
 export const login = async (userEmail: string, userPassword: string) => {
@@ -59,46 +57,24 @@ export const login = async (userEmail: string, userPassword: string) => {
   }
 }
 
-export const isLoggedIn = async () => {
+export const loginWithGoogle = async () => {
   try {
-    const data = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        return user
-      } else {
-        return null
-      }
-    })
+    // Create a new GoogleAuthProvider instance
+    const provider = new GoogleAuthProvider()
+    // Call the signInWithPopup method with the provider instance
+    const user = await signInWithPopup(auth, provider)
+
+    // Get the user's Google access token.
+    const credential = GoogleAuthProvider.credentialFromResult(user)
+
+    const token = credential?.accessToken
+    console.log('🟡 Firebase token is:', token)
+
+    return user
   } catch (error) {
-    return { errors: `🔴 ${error} ` }
+    // Handle the error
+    console.error('Error logging in with Google Provider:', error)
+    // Optionally, you can throw the error to be caught by the caller
+    throw error
   }
 }
-
-/*
-Required to receive emails in Zoho
-
-
-At Farm2Table.com.ng, we aim to transform the food industry in Nigeria by connecting local farmers with consumers. 
-Our mission is to empower farmers, promote agricultural diversity, and provide households with easy access to fresh, locally sourced ingredients.
-
-
-Our vision at Farm2Table.com.ng is to create a sustainable agricultural ecosystem in Nigeria where farmers succeed, consumers have access to fresh and healthy food, and households enjoy cooking with locally sourced ingredients. We aim to drive positive change in the food supply chain, supporting economic growth, community well-being, and environmental sustainability nationwide.
-
-
-
-
-Introducing Farm2Table.com.ng – get fresh, local ingredients delivered to you! Say goodbye to grocery store hassle with our subscription service. Enjoy nutritious meals, support local farmers, and choose sustainable agriculture. Upgrade your cooking with Farm2Table.com.ng today.
-
-Top 3 Offers:
-
-1. Fresh, Local Ingredients: Wide selection of farm-fresh produce, meats, and dairy products sourced from local farmers.
-
-
-2. Empowerment for Women Farmers: Specialized training programs and financial support to empower women in agriculture.
-
-
-3. Convenient Subscription Plans: Flexible meal planning with fresh ingredients delivered to your doorstep.
-
-Business Focus:
-Farm2Table.com.ng focuses on connecting local farmers with consumers to promote sustainability and convenience in the food supply chain. They champion local ingredients, empower women farmers, and offer convenient subscription plans to improve access to fresh, nutritious food in Nigeria.
-
-*/
