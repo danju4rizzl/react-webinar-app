@@ -5,6 +5,7 @@ import FancyButton from '@/components/ui/fancy-button'
 
 import { SLIDER_DATA } from '@/lib/constance'
 import Faq from '@/components/faq'
+import Footer from '@/components/footer'
 
 export const Route = createFileRoute('/')({
   component: HomeComponent
@@ -58,6 +59,7 @@ function HomeComponent() {
           <Faq />
         </div>
       </div>
+      <Footer />
     </section>
   )
 }
