@@ -2,22 +2,10 @@ import { useState, useEffect } from 'react'
 import { Link } from '@tanstack/react-router'
 import FancyButton from './ui/fancy-button'
 import BrandLogo from './ui/brand-logo'
+import useChangeBgOnScroll from '@/hooks/useChangeBgOnScroll'
 
 const Header = () => {
-  const [bgColor, setBgColor] = useState('bg-transparent')
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setBgColor('backdrop-blur-md bg-opacity-50') // Change to the desired color when scrolled down
-      } else {
-        setBgColor('bg-transparent') // Reset to the original color
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const bgColor = useChangeBgOnScroll()
 
   return (
     <header

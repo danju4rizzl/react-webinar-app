@@ -10,6 +10,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from 'firebase/auth'
+import { on } from 'events'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -77,4 +78,9 @@ export const loginWithGoogle = async () => {
     // Optionally, you can throw the error to be caught by the caller
     throw error
   }
+}
+
+export const getUser = () => {
+  const currentUser = onAuthStateChanged(auth, (user) => (user ? user : null))
+  console.log(currentUser)
 }
