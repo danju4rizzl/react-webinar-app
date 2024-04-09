@@ -14,8 +14,7 @@ export const SignupSchema = z.object({
     .min(2, {
       message: 'Email must be at least 2 characters.'
     })
-    .email({ message: 'Email address is not valid' })
-    .default(''),
+    .email({ message: 'Email address is not valid' }),
   userPassword: z
     .string()
     .min(8, 'Password must be at least 8 characters long')
@@ -34,8 +33,10 @@ export const SignupSchema = z.object({
     .refine(
       (value) => value.match(/[!@#$%^&*(),.?":{}|<>]/),
       'Password must contain at least one special character'
-    )
-    .default('')
+    ),
+  userAgreed: z
+    .boolean()
+    .refine((value) => value, 'You must agree to the terms and conditions')
 })
 
 /**
@@ -43,26 +44,26 @@ export const SignupSchema = z.object({
  * It includes fields for username and password.
  */
 export const LoginSchema = z.object({
-  username: z.string().min(2, {
+  userEmail: z.string().min(2, {
     message: 'Username must be at least 2 characters.'
   }),
-  password: z.string().min(2, {
-    message: 'Password must be at least 2 characters.'
-  }),
-  remember: z.boolean().default(false).optional()
+  userPassword: z
+    .string()
+    .min(8, 'Password must be at least 8 characters long'),
+  rememberUser: z.boolean().optional()
 })
-
-/**
- * LoginFormType is the inferred type from the LoginSchema.
- * It represents the shape of the login form data.
- */
-export type LoginFormType = z.infer<typeof LoginSchema>
 
 /**
  * SignupFormType is the inferred type from the SignupSchema.
  * It represents the shape of the signup form data.
  */
 export type SignupFormType = z.infer<typeof SignupSchema>
+
+/**
+ * LoginFormType is the inferred type from the LoginSchema.
+ * It represents the shape of the login form data.
+ */
+export type LoginFormType = z.infer<typeof LoginSchema>
 
 /**
  * SliderData represents the structure of data for a slider component.

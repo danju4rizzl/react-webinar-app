@@ -15,48 +15,49 @@ import {
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
 import FancyButton from './ui/fancy-button'
-import { useState } from 'react'
 
 import { useToast } from './ui/use-toast'
 
 export default function SignupForm() {
-  const [acceptTerms, setAcceptTerms] = useState(false)
   const { toast } = useToast()
 
   // 1. Define your form.
   const form = useForm<SignupFormType>({
-    resolver: zodResolver(SignupSchema)
+    resolver: zodResolver(SignupSchema),
+    defaultValues: {
+      userEmail: '',
+      userPassword: '',
+      userAgreed: false
+    }
   })
 
-  // 2. Define a submit handler.
+  const { control, watch, formState, reset, setValue, handleSubmit } = form
+
+  const { userEmail, userPassword, userAgreed } = watch()
+
+  const toggleAgreed = () => setValue('userAgreed', !userAgreed)
+
   async function onSubmit({ userEmail, userPassword }: SignupFormType) {
-    const { reset } = form
     const data = await signUp(userEmail, userPassword)
-
-    toast({
-      title: 'Signup Success',
-      description: 'You have successfully signed up'
-    })
-    reset()
-    console.log(data)
+    if (data.email) {
+      toast({
+        title: 'Signup Successful',
+        description: 'You have successfully signed up'
+      })
+      reset()
+    } else {
+      toast({
+        title: 'Signup Error',
+        description: 'something happened, email account  already exist'
+      })
+    }
   }
-
-  const { watch, formState } = form
-  const { userEmail, userPassword } = watch()
-  const isSubmitDisabled =
-    !userPassword ||
-    userPassword.length < 6 ||
-    !userEmail ||
-    formState.isSubmitting
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 max-w-xl"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 max-w-xl">
         <FormField
-          control={form.control}
+          control={control}
           name="userEmail"
           render={({ field }) => (
             <FormItem>
@@ -74,7 +75,7 @@ export default function SignupForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={control}
           name="userPassword"
           render={({ field }) => (
             <FormItem>
@@ -92,26 +93,36 @@ export default function SignupForm() {
           )}
         />
 
-        <div className="flex items-center justify-between">
-          <div className="space-x-3 items-center flex">
-            <Checkbox
-              checked={acceptTerms}
-              onClick={() => setAcceptTerms((prev) => !prev)}
-              className="rounded"
-              id="acceptedCheckbox"
-              disabled={isSubmitDisabled}
-            />
-            <FormLabel htmlFor="acceptedCheckbox">
-              I agree with Terms and Conditions
-            </FormLabel>
-          </div>
-        </div>
+        <FormField
+          control={control}
+          name="userAgreed"
+          render={() => (
+            <FormItem>
+              <FormControl>
+                <div className="space-x-3 items-center flex">
+                  <Checkbox
+                    checked={userAgreed}
+                    onClick={toggleAgreed}
+                    className="rounded"
+                    id="acceptedCheckbox"
+                    disabled={!userEmail || !userPassword}
+                  />
+                  <FormLabel htmlFor="acceptedCheckbox">
+                    I agree with Terms and Conditions
+                  </FormLabel>
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
         <FancyButton
           title="Sign Up"
           className="w-full"
           isSubmit
-          isDisable={!acceptTerms || isSubmitDisabled}
+          isDisable={
+            !userEmail || !userPassword || !userAgreed || formState.isSubmitting
+          }
         />
       </form>
     </Form>

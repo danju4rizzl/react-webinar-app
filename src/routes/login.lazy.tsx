@@ -1,5 +1,7 @@
 import LoginForm from '@/components/login-form'
+import ThirdPartyLogins from '@/components/third-party-logins'
 import FancyText from '@/components/ui/fancy-text'
+import { Separator } from '@/components/ui/separator'
 import useIsMobile from '@/hooks/useIsMobile'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 
@@ -11,17 +13,17 @@ function LoginComponent() {
   const isMobile = useIsMobile()
 
   const styles = {
-    backgroundImage: 'url(/signup-screen-bg-image.png)'
+    backgroundImage: `linear-gradient(to top left, rgba(25, 25, 25, 1), rgba(25, 25, 25, 0.2),rgba(25, 25, 25, 1)), url(/login-screen-bg-image.png)`
   }
 
   return (
     <div
-      className="  max-w-full min-h-screen overflow-hidden grid md:grid-flow-col bg-cover bg-no-repeat "
+      className="max-w-full min-h-screen overflow-hidden grid md:grid-flow-col animate-move-up-down"
       style={isMobile ? styles : {}}
     >
       {/* left side  */}
       <div
-        className="p-24 rounded-r-3xl hidden md:block animate-move-bg max-w-full h-screen overflow-hidden bg-cover shadow-inner"
+        className="p-24 rounded-r-3xl hidden md:block max-w-full h-screen overflow-hidden animate-move-up-down ani"
         style={styles}
       ></div>
 
@@ -36,8 +38,23 @@ function LoginComponent() {
               Log back in to keep creating magic.
             </p>
           </div>
+          <ThirdPartyLogins />
+
+          {/* A separator    */}
+          <div className="flex justify-center items-center">
+            <Separator className="w-1/4" />
+            <small className="text-neutral-500 mx-5">or login with email</small>
+            <Separator className="w-1/4" />
+          </div>
 
           <LoginForm />
+
+          <div className="flex justify-center space-x-1">
+            <p>Don’t have an account?</p>
+            <Link to="/signup" className="text-teal-300">
+              SignUp
+            </Link>
+          </div>
         </div>
       </div>
     </div>
