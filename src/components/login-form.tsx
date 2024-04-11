@@ -34,16 +34,14 @@ export default function LoginForm() {
   const toggleRemember = () => setValue('rememberUser', !rememberUser)
 
   // 2. Define a submit handler.
-  async function onSubmit({
-    userEmail,
-    userPassword,
-    rememberUser
-  }: LoginFormType) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit({ userEmail, userPassword }: LoginFormType) {
+    const user = await login(userEmail, userPassword)
+    if (user) {
+      reset()
+      // TODO redirect the user to the app using tanstak
 
-    // const user = await login(values.username, values.password)
-    console.log('values', [userEmail, userPassword, rememberUser])
+      console.log('values', user)
+    }
   }
 
   return (

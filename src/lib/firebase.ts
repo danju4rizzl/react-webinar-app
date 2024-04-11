@@ -10,7 +10,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from 'firebase/auth'
-import { on } from 'events'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -71,6 +70,9 @@ export const loginWithGoogle = async () => {
     const token = credential?.accessToken
     console.log('🟡 Firebase token is:', token)
 
+    // redirect the user to /app
+    window.location.href = '/app'
+
     return user
   } catch (error) {
     // Handle the error
@@ -81,6 +83,14 @@ export const loginWithGoogle = async () => {
 }
 
 export const getUser = () => {
-  const currentUser = onAuthStateChanged(auth, (user) => (user ? user : null))
-  console.log(currentUser)
+  return new Promise<User | null>((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
+      resolve(user)
+    })
+  })
+}
+
+export const logoutUser = () => {
+  window.location.href = '/login'
+  auth.signOut()
 }

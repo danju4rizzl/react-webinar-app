@@ -1,17 +1,18 @@
 // This file will be used as an interface to communicates with new
 
+import { User } from 'firebase/auth'
 import * as React from 'react'
 
 export interface AuthContext {
   isAuthenticated: boolean
-  setUser: (username: string | null) => void
-  user: string | null
+  setUser: (userData: User | null) => void
+  user: User | null
 }
 
 const AuthContext = React.createContext<AuthContext | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = React.useState<string | null>(null)
+  const [user, setUser] = React.useState<User | null>(null)
   const isAuthenticated = !!user
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, setUser }}>
