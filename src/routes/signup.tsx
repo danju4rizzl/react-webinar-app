@@ -1,23 +1,15 @@
-import { Link, createLazyFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import useIsMobile from '@/hooks/useIsMobile'
 import SignupForm from '@/components/signup-form'
 import FancyText from '@/components/ui/fancy-text'
 import ThirdPartyLogins from '@/components/third-party-logins'
-
-import { useFirebaseAuth } from '@/hooks/useFirebaseAuth'
 import { Separator } from '@/components/ui/separator'
 
-export const Route = createLazyFileRoute('/signup')({
+export const Route = createFileRoute('/signup')({
   component: SignUpComponent
 })
 
 function SignUpComponent() {
-  /*using the useFirebaseAuth hook to check if the user is logged in. If they are, they will be redirected to the dashboard.
-
-  const user = useFirebaseAuth()
-  console.log('🟡 User is:', user)
-  */
-
   const isMobile = useIsMobile()
 
   const styles = {
@@ -52,7 +44,11 @@ function SignUpComponent() {
           <ThirdPartyLogins />
           <div className="flex justify-center space-x-2">
             <p>I have an account?</p>
-            <Link to="/login" className="text-teal-300">
+            <Link
+              search={{ redirect: '/' }}
+              to="/login"
+              className="text-teal-300"
+            >
               Login
             </Link>
           </div>

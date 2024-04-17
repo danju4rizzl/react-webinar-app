@@ -1,20 +1,43 @@
-import { useState, useEffect } from 'react'
-import { Link } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { Link, useNavigate } from '@tanstack/react-router'
+
+import { getUser, logoutUser } from '@/lib/firebase'
+import useChangeBgOnScroll from '@/hooks/useChangeBgOnScroll'
+
 import FancyButton from './ui/fancy-button'
 import BrandLogo from './ui/brand-logo'
-import useChangeBgOnScroll from '@/hooks/useChangeBgOnScroll'
-import { getUser, logoutUser } from '@/lib/firebase'
-import { User } from 'firebase/auth'
 import { Button } from './ui/button'
+import { useAuth } from '@/auth'
+import { flushSync } from 'react-dom'
 
 const Header = () => {
   const bgColor = useChangeBgOnScroll()
-  const [user, setUser] = useState<User | null>(null)
+  const auth = useAuth()
+  const navigate = useNavigate()
+
+  // This will run whenever the login button is clicked
+  const handleLogout = () => {
+    const hasLoggedOut = logoutUser()
+
+    flushSync(() => {
+      auth.setUser(hasLoggedOut)
+    })
+
+    navigate({ to: '/' })
+  }
 
   useEffect(() => {
-    getUser().then((userData) => {
-      setUser(userData)
-    })
+    /*
+    When the header component mounts this useEffect
+    checks once, if the user is logged in then sets the auth context
+    */
+    const getUserFromFirebase = async () => {
+      const firebaseUser = await getUser()
+      if (firebaseUser) {
+        auth.setUser(firebaseUser)
+      }
+    }
+    getUserFromFirebase()
   }, [])
 
   return (
@@ -24,7 +47,7 @@ const Header = () => {
       <BrandLogo className="max-w-16" />
 
       <div className="flex items-center  gap-x-5">
-        {!user ? (
+        {!auth.isAuthenticated ? (
           <>
             <Link to="/login" className="[&.active]:font-bold">
               login
@@ -37,7 +60,7 @@ const Header = () => {
           <Button
             type="button"
             className="[&.active]:font-bold"
-            onClick={() => logoutUser()}
+            onClick={handleLogout}
           >
             Logout
           </Button>

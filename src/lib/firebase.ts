@@ -32,14 +32,18 @@ export const auth = getAuth(firebaseApp)
 export const signUp = async (
   userEmail: string,
   userPassword: string
-): Promise<User> => {
-  const userCredential = await createUserWithEmailAndPassword(
-    auth,
-    userEmail,
-    userPassword
-  )
+): Promise<User | null> => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      userEmail,
+      userPassword
+    )
 
-  return userCredential.user
+    return userCredential.user
+  } catch (error) {
+    return null
+  }
 }
 
 export const login = async (userEmail: string, userPassword: string) => {
@@ -50,10 +54,9 @@ export const login = async (userEmail: string, userPassword: string) => {
       userPassword
     )
 
-    const user = userCredential.user
-    return user
+    return userCredential.user
   } catch (error) {
-    return { errors: `🔴 ${error} ` }
+    return null
   }
 }
 
@@ -62,35 +65,32 @@ export const loginWithGoogle = async () => {
     // Create a new GoogleAuthProvider instance
     const provider = new GoogleAuthProvider()
     // Call the signInWithPopup method with the provider instance
-    const user = await signInWithPopup(auth, provider)
+    const userCredential = await signInWithPopup(auth, provider)
 
-    // Get the user's Google access token.
-    const credential = GoogleAuthProvider.credentialFromResult(user)
-
-    const token = credential?.accessToken
-    console.log('🟡 Firebase token is:', token)
+    // Get the user's Google access token for use on a custom backend
+    // const credential = GoogleAuthProvider.credentialFromResult(userCredential)
+    // const token = credential?.accessToken
+    // console.log('🟡 Firebase token is:', token)
 
     // redirect the user to /app
-    window.location.href = '/app'
-
-    return user
+    return userCredential.user
   } catch (error) {
     // Handle the error
     console.error('Error logging in with Google Provider:', error)
-    // Optionally, you can throw the error to be caught by the caller
-    throw error
+    return null
   }
 }
 
 export const getUser = () => {
-  return new Promise<User | null>((resolve, reject) => {
-    onAuthStateChanged(auth, (user) => {
+  return new Promise<User | null>((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      unsubscribe() // Unsubscribe after getting the user once
       resolve(user)
     })
   })
 }
 
 export const logoutUser = () => {
-  window.location.href = '/login'
   auth.signOut()
+  return null
 }

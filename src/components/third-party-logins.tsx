@@ -6,14 +6,28 @@ import AppleIcon from '@/assets/apple.svg'
 
 import { toast } from '@/components/ui/use-toast'
 import { Separator } from './ui/separator'
+import { useAuth } from '@/auth'
+import { flushSync } from 'react-dom'
+import { useNavigate } from '@tanstack/react-router'
 
 const ThirdPartyLogins = () => {
+  const auth = useAuth()
+  const navigate = useNavigate()
+
+  const handleGoogleProvider = async () => {
+    const userFromGoogle = await loginWithGoogle()
+
+    if (userFromGoogle) {
+      flushSync(() => {
+        auth.setUser(userFromGoogle)
+      })
+      navigate({ to: '/app' })
+    }
+  }
+
   return (
     <div className="flex justify-center items-center space-x-4">
-      <Button
-        onClick={() => loginWithGoogle()}
-        className="hover:bg-neutral-800"
-      >
+      <Button onClick={handleGoogleProvider} className="hover:bg-neutral-800">
         <img
           src={GoogleIcon}
           alt="Log in with Google"

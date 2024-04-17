@@ -1,5 +1,5 @@
-import FancyText from '@/components/ui/fancy-text'
 import { Link, createFileRoute } from '@tanstack/react-router'
+import FancyText from '@/components/ui/fancy-text'
 import { ImageSlider } from '@/components/image-slider'
 import FancyButton from '@/components/ui/fancy-button'
 
@@ -7,12 +7,15 @@ import { SLIDER_DATA } from '@/lib/constance'
 import Faq from '@/components/faq'
 import Footer from '@/components/footer'
 
+import { useAuth } from '@/auth'
+
 export const Route = createFileRoute('/')({
   component: HomeComponent
 })
 
 function HomeComponent() {
   const sliders = SLIDER_DATA
+  const auth = useAuth()
 
   return (
     <section>
@@ -35,8 +38,10 @@ function HomeComponent() {
           </p>
 
           <div className="">
-            <Link to="/signup">
-              <FancyButton title="Start using Drawh AI now" />
+            <Link to={auth.isAuthenticated ? '/app' : '/signup'}>
+              <FancyButton
+                title={`${auth.isAuthenticated ? 'Continue' : 'Start'} using Drawh AI now `}
+              />
             </Link>
             <p className="my-1 text-sm">No credit card needed</p>
           </div>

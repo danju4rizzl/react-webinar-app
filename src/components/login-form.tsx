@@ -1,5 +1,4 @@
 import { login } from '@/lib/firebase'
-
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema, LoginFormType } from '@/lib/types'
@@ -13,8 +12,11 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
-
 import FancyButton from './ui/fancy-button'
+import { useAuth } from '@/auth'
+import { useToast } from './ui/use-toast'
+import { flushSync } from 'react-dom'
+import { useNavigate } from '@tanstack/react-router'
 
 export default function LoginForm() {
   // 1. Define your form.
@@ -26,21 +28,32 @@ export default function LoginForm() {
       rememberUser: false
     }
   })
-
   const { control, handleSubmit, watch, setValue, formState, reset } = form
 
   const { userEmail, userPassword, rememberUser } = watch()
 
-  const toggleRemember = () => setValue('rememberUser', !rememberUser)
+  const auth = useAuth()
+  const navigate = useNavigate()
+  const { toast } = useToast()
 
   // 2. Define a submit handler.
   async function onSubmit({ userEmail, userPassword }: LoginFormType) {
     const user = await login(userEmail, userPassword)
-    if (user) {
-      reset()
-      // TODO redirect the user to the app using tanstak
 
-      console.log('values', user)
+    if (user) {
+      flushSync(() => {
+        auth.setUser(user)
+      })
+
+      reset()
+      navigate({ to: '/app' })
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Invalid email or password',
+        variant: 'destructive',
+        duration: 2500
+      })
     }
   }
 
@@ -90,7 +103,7 @@ export default function LoginForm() {
                   <div className="space-x-3 items-center flex">
                     <Checkbox
                       checked={rememberUser}
-                      onClick={toggleRemember}
+                      onClick={() => setValue('rememberUser', !rememberUser)}
                       className="rounded"
                       id="rememberCheckbox"
                       disabled={!userEmail.length || !userPassword.length}

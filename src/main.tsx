@@ -7,14 +7,14 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
-import { AuthProvider, useAuth } from './lib/auth'
+import { AuthProvider, useAuth } from './auth'
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
   context: {
-    auth: undefined
+    auth: undefined! // This will be set after we wrap the app in an AuthProvider
   }
 })
 
@@ -27,15 +27,24 @@ declare module '@tanstack/react-router' {
 
 function InnerApp() {
   const auth = useAuth()
-  return <RouterProvider router={router} context={auth} />
+  return <RouterProvider router={router} context={{ auth }} />
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <AuthProvider>
-        <InnerApp />
-      </AuthProvider>
-    </ThemeProvider>
-  </React.StrictMode>
-)
+function App() {
+  return (
+    <React.StrictMode>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <AuthProvider>
+          <InnerApp />
+        </AuthProvider>
+      </ThemeProvider>
+    </React.StrictMode>
+  )
+}
+
+const rootElement = document.getElementById('root')!
+
+if (!rootElement.innerHTML) {
+  const root = ReactDOM.createRoot(rootElement)
+  root.render(<App />)
+}

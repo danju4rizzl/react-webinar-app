@@ -3,9 +3,19 @@ import ThirdPartyLogins from '@/components/third-party-logins'
 import FancyText from '@/components/ui/fancy-text'
 import { Separator } from '@/components/ui/separator'
 import useIsMobile from '@/hooks/useIsMobile'
-import { Link, createLazyFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
+import { redirect } from '@tanstack/react-router'
 
-export const Route = createLazyFileRoute('/login')({
+export const Route = createFileRoute('/login')({
+  //  This will protect the route from unauthenticated users
+  beforeLoad: ({ context, location }) => {
+    if (context.auth.isAuthenticated) {
+      throw redirect({
+        to: '/app',
+        search: { redirect: location.href }
+      })
+    }
+  },
   component: LoginComponent
 })
 
@@ -18,12 +28,12 @@ function LoginComponent() {
 
   return (
     <div
-      className="max-w-full min-h-screen overflow-hidden grid md:grid-flow-col animate-move-up-down"
+      className="max-w-full h-screen overflow-hidden grid md:grid-flow-col animate-move-up-down"
       style={isMobile ? styles : {}}
     >
       {/* left side  */}
       <div
-        className="p-24 rounded-r-3xl hidden md:block max-w-full h-screen overflow-hidden animate-move-up-down ani"
+        className="p-24 rounded-r-3xl hidden md:block max-w-full h-screen overflow-hidden animate-move-up-down"
         style={styles}
       ></div>
 
@@ -51,7 +61,11 @@ function LoginComponent() {
 
           <div className="flex justify-center space-x-1">
             <p>Don’t have an account?</p>
-            <Link to="/signup" className="text-teal-300">
+            <Link
+              search={{ redirect: '/' }}
+              to="/signup"
+              className="text-teal-300"
+            >
               SignUp
             </Link>
           </div>
