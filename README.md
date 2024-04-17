@@ -13,6 +13,14 @@ This document provides an overview of the important dependencies used in this pr
   pnpm run dev
   ```
 
+## User Credential for testing 👤
+
+```bash
+## In login page http://localhost:3000/login
+email: testbot123@xyz.com
+password: Testbot123@xyz.com
+```
+
 ## Dependencies 📦
 
 #### [React]('https://react.dev/') helps create user interfaces from components.

@@ -60,7 +60,9 @@ export default function SignupForm() {
     } else {
       toast({
         title: 'Signup Error',
-        description: 'something happened, email account  already exist'
+        description: 'Sorry, email account already exist',
+        variant: 'destructive',
+        duration: 3000
       })
     }
   }

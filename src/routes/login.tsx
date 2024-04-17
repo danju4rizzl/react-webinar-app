@@ -4,18 +4,8 @@ import FancyText from '@/components/ui/fancy-text'
 import { Separator } from '@/components/ui/separator'
 import useIsMobile from '@/hooks/useIsMobile'
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/login')({
-  //  This will protect the route from unauthenticated users
-  beforeLoad: ({ context, location }) => {
-    if (context.auth.isAuthenticated) {
-      throw redirect({
-        to: '/app',
-        search: { redirect: location.href }
-      })
-    }
-  },
   component: LoginComponent
 })
 

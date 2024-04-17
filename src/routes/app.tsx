@@ -1,17 +1,17 @@
 import FancyButton from '@/components/ui/fancy-button'
 import { Input } from '@/components/ui/input'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app')({
-  //  This will protect the route from unauthenticated users
-  // beforeLoad: ({ context, location }) => {
-  //   if (!context.auth.isAuthenticated) {
-  //     throw redirect({
-  //       to: '/login',
-  //       search: { redirect: location.href }
-  //     })
-  //   }
-  // },
+  //  This will protect the "/app" route from unauthenticated users
+  beforeLoad: ({ context, location }) => {
+    if (!context.auth.isAuthenticated) {
+      throw redirect({
+        to: '/login',
+        search: { redirect: location.href }
+      })
+    }
+  },
   component: AppComponent
 })
 

@@ -12,7 +12,7 @@ interface RootRouterContext {
 
 export const Route = createRootRouteWithContext<RootRouterContext>()({
   component: RootComponent,
-  notFoundComponent: NotFound
+  notFoundComponent: () => <NotFound />
 })
 
 function RootComponent() {
